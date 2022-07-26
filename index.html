@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <link rel="icon" href="img/icons/truck.svg" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="apple-touch-icon" sizes="76x76" href="img/icons/truck.svg" />
+  <link rel="shortcut icon" href="img/icons/truck.svg" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <title>YOUR_COMPANY_HERE + Yembo.ai®</title>
+</head>
+
+<body>
+  <div id="root">
+    <div class="App">
+
+      <!-- Form 1 -->
+      <div id="quote-modal1" class="modal-wrap">
+        <div class="modal">
+          <div>
+            <div class="modal-top">
+              <div onclick="document.getElementById('quote-modal1').style.display='none'" class="close">&times;</div>
+            </div>
+            <div class="progress-zip"></div>
+          </div>
+          <div class="modal-step">
+            <form id="form1" class="form">
+              <div class="form-field form-field-zip">
+                <label class="form-field-label" for="originZip">What ZIP code are you moving from?</label>
+                <input aria-invalid="false" name="originZip" type="text" value="" class="originZip" id="originZip"
+                  data-rule-required="true" data-msg-required="Field required" />
+              </div>
+              <div class="form-field form-field-zip">
+                <label class="form-field-label" for="destinationZip">What ZIP code are you moving to?</label>
+                <input aria-invalid="false" name="destinationZip" type="text" value="" class="destinationZip"
+                  id="destinationZip" data-rule-required="true" data-msg-required="Field required" />
+              </div>
+              <div class="form-field form-field-zip">
+                <label class="form-field-label" for="moveDate">Expected move date</label>
+                <input type="date" id="moveDate" value="" class="datepick" data-rule-required="true"
+                  data-msg-required="Move date required" />
+              </div>
+              <div class="button-wrapper">
+                <button id="form1-continue-button" type="submit" class="continue">Continue</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form 2 -->
+      <div id="quote-modal2" class="modal-wrap">
+        <div class="modal">
+          <div>
+            <div class="modal-top">
+              <i id="prev-btn-form2" class="fa fa-solid fa-arrow-left"></i>
+              <div onclick="document.getElementById('quote-modal2').style.display='none'" class="close">&times;</div>
+            </div>
+            <div class="progress-beds"></div>
+          </div>
+          <div class="modal-step">
+            <form class="form" novalidate="">
+              <div class="form-field form-field-beds">
+                <label class="form-field-label">How many bedrooms?</label>
+                <div class="bedroom-options">
+                  <button type="button" class="option" value="1" name="beds">1</button><button type="button"
+                    class="option" value="2" name="beds">2</button><button type="button" class="option" value="3"
+                    name="beds">3</button><button type="button" class="option" value="4" name="beds">4</button><button
+                    type="button" class="option" value="5" name="beds">5+</button>
+                </div>
+                <span class="form-error-message error-beds show-false" id="error-beds">This field is required.</span>
+              </div>
+              <div class="button-wrapper">
+                <button id="form2-continue-button" type="button" class="continue">Continue</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form 3 -->
+      <div id="quote-modal3" class="modal-wrap">
+        <div class="modal">
+          <div>
+            <div class="modal-top">
+              <i id="prev-btn-form3" class="fa fa-solid fa-arrow-left"></i>
+              <div onclick="document.getElementById('quote-modal3').style.display='none'" class="close">&times;</div>
+            </div>
+            <div class="progress-contact"></div>
+          </div>
+          <div class="modal-step">
+            <form id="form3" class="form" novalidate="">
+              <div class="form-field form-field-contact">
+                <label class="form-field-label" for="givenName">Where should we send your quote?</label>
+                <input aria-invalid="false" name="givenName" id="givenName" placeholder="First Name" type="text"
+                  value="" data-rule-required="true" data-msg-required="Field required" />
+              </div>
+              <div class="form-field form-field-contact">
+                <input aria-invalid="false" name="familyName" id="familyName" placeholder="Last Name" type="text"
+                  value="" data-rule-required="true" data-msg-required="Field required" />
+              </div>
+              <div class="form-field form-field-contact">
+                <input aria-invalid="false" type="tel" value="" id="phone" data-rule-required="false"
+                  data-msg-required="" data-rule-phone-custom="true" />
+              </div>
+              <div class="form-field form-field-contact">
+                <input aria-invalid="false" name="email" id="email" placeholder="Email" type="text" value=""
+                  data-rule-required="true" data-rule-email="true" data-msg-required="Field required"
+                  data-msg-email="Please enter a valid email" />
+              </div>
+              <div class="step-contact-legal">
+                <div class="privacy">
+                  <i class="fa fa-lock"></i>
+                  <p>We respect your privacy. Your information is shared securely.</p>
+                </div>
+                <p class="consent">
+                  By clicking "Continue", you consent for Wizard Moving and partners to use automated technology,
+                  including pre-recorded messages, emails, cell phones and texts, to contact you at the number
+                  provided. This includes if the number is currently on any Do Not Call Lists. This consent is not
+                  required to make a purchase.
+                </p>
+              </div>
+              <div class="button-wrapper">
+                <button id="form3-continue-button" type="submit" class="continue">Continue</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form 4 Start Recording page -->
+      <div id="quote-modal4" class="modal-wrap">
+        <div class="modal">
+          <div>
+            <div class="modal-top">
+              <div onclick="document.getElementById('quote-modal4').style.display='none'" class="close">&times;</div>
+            </div>
+            <div class="progress-startRecording"></div>
+          </div>
+          <div class="modal-step">
+            <div class="form demo-page">
+              <div class="start-recording-wrap">
+                <h3>
+                  <span><span id="replace-with-name" class="name">Hi there</span>, an accurate quote is a few quick
+                    videos away!</span>
+                </h3>
+                <p class="sub-head">
+                  Take a few short videos of the rooms in your house, and we will provide an accurate quote with no
+                  hidden fees.
+                </p>
+                <div class="image-step-wrap">
+                  <div class="image-wrap">
+                    <div class="image">
+                      <img src="img/demo.gif" alt="record-video" />
+                    </div>
+                    <div class="step-wrap-desktop">
+                      <div class="step-wrap">
+                        <h5>It's easy -</h5>
+                        <div class="step-list">
+                          <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">
+                              <h6>Record rooms with items to move</h6>
+                            </div>
+                          </div>
+                          <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">
+                              <h6>Our software creates moving list for you</h6>
+                            </div>
+                          </div>
+                          <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">
+                              <h6>You get an accurate quote based on your items</h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="start-recording-button-wrap">
+                    <button id="form4-recording-button" class="start-recording-button caps-button">
+                      Start Recording
+                    </button>
+                  </div>
+                  <div class="not-home-button-wrap">
+                    <button id="form4-not-home-button" class="not-home-button">Not Home?</button>
+                  </div>
+                  <div class="step-wrap-mobile">
+                    <div class="step-wrap">
+                      <h5>It's easy -</h5>
+                      <div class="step-list">
+                        <div class="step">
+                          <div class="step-number">1</div>
+                          <div class="step-text">
+                            <h6>Record rooms with items to move</h6>
+                          </div>
+                        </div>
+                        <div class="step">
+                          <div class="step-number">2</div>
+                          <div class="step-text">
+                            <h6>Our software creates moving list for you</h6>
+                          </div>
+                        </div>
+                        <div class="step">
+                          <div class="step-number">3</div>
+                          <div class="step-text">
+                            <h6>You get an accurate quote based on your items</h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form page - After clicking start recording -->
+      <div id="quote-modal5" class="modal-wrap">
+        <div class="modal">
+          <div>
+            <div class="modal-top">
+              <div onclick="document.getElementById('quote-modal5').style.display='none'" class="close">&times;</div>
+            </div>
+            <div class="progress-startRecording"></div>
+          </div>
+          <div class="modal-step">
+            <div class="form demo-page">
+              <div class="start-recording-success">
+                <h3>Check your email</h3>
+                <img class="start-recording-success-image" src="img/smartphone.png" alt="smartphone" />
+                <p>
+                  We sent you a link so you can record a few quick videos of your rooms. Please record on a mobile
+                  device.
+                </p>
+                <p>We will get back to you shortly to discuss your move.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form page after clicking Not Home Button -->
+      <div id="quote-modal6" class="modal-wrap">
+        <div class="modal">
+          <div>
+            <div class="modal-top">
+              <div onclick="document.getElementById('quote-modal6').style.display='none'" class="close">&times;</div>
+            </div>
+            <div class="progress-startRecording"></div>
+          </div>
+          <div class="modal-step">
+            <div class="form demo-page">
+              <div class="set-reminder">
+                <h3>Not Home?</h3>
+                <p>
+                  Choose a time that you are available to record your belongings. We will email you a link with
+                  instructions at that time.
+                </p>
+                <form class="form" id="form6">
+                  <div class="form-field form-field-reminder">
+                    <input type="datetime-local" id="remindDate" class="datepick" data-rule-required="true"
+                      data-msg-required="Remind date required" />
+                  </div>
+                  <div class="reminder-button-wrap">
+                    <button id="form6-set-remainder-button" class="set-reminder-button caps-button" type="submit">
+                      Remind Me Then
+                    </button>
+                  </div>
+                </form>
+                <div id="form6-go-back-button" class="reminder-back-button">
+                  <button>Go back</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form page After Clicking Remind Me Then Button -->
+      <div id="quote-modal7" class="modal-wrap">
+        <div class="modal">
+          <div>
+            <div class="modal-top">
+              <div onclick="document.getElementById('quote-modal7').style.display='none'" class="close">&times;</div>
+            </div>
+            <div class="progress-startRecording"></div>
+          </div>
+          <div class="modal-step">
+            <div class="form demo-page">
+              <div class="reminder-success-wrap">
+                <span>A link to record your items will be sent at this time:
+                  <span id="showRemindDate">June 24th, 6:00 pm</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- error message on clicking start-recording-button -->
+      <div id="quote-modal8" class="modal-wrap">
+        <div class="modal">
+          <div>
+            <div class="modal-top">
+              <div onclick="document.getElementById('quote-modal8').style.display='none'" class="close">&times;</div>
+            </div>
+            <div class="progress-startRecording"></div>
+          </div>
+          <div class="modal-step">
+            <div class="form demo-page">
+              <div class="error-message">Uh oh - something went wrong. Refresh screen to try again.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <div class="landing-page">
+        <div class="sticky-container">
+          <section class="header">
+            <div class="header-background-wrap">
+              <video class="header-background" preload="metadata" autoplay loop muted>
+                <source src="https://media.yembo.ai/mariner/lander/lander-background.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="header-content-wrap with-video">
+              <div class="header-content">
+                <div class="call-section">
+                  <img src="img/company-logo.png" class="logo" alt="company-logo" />
+                  <a href="YOUR_PHONE_HERE">
+                    <div class="theme-svg" data-svg-src="img/icons/phone-icon.svg"></div>
+                  </a>
+                </div>
+                <div class="header-text">
+                  <h1>The Quickest Moving Quote Possible!</h1>
+                  <p class="sub-head">To get a quote, record a video of your home on your phone. That's it!</p>
+                  <div class="header-quote-button">
+                    <button id="show-quote-modal1" class="show-quote-button">
+                      &nbsp; &nbsp;
+                      <i class="fa fa-solid fa-caret-right"></i>
+                    </button>
+                  </div>
+                  <div class="desktop-call-text">
+                    <a href="YOUR_PHONE_HERE">
+                      <p>I'd rather talk about it over the phone: YOUR_PHONE_HERE</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="sticky-cta">
+            <button id="show-quote-modal2" class="show-quote-button">
+              &nbsp; &nbsp;
+              <i class="fa fa-solid fa-caret-right"></i>
+            </button>
+          </div>
+          <section class="get-started">
+            <h2>Get started in 3 easy steps</h2>
+            <div class="three-step-wrap">
+              <div class="step">
+                <div class="step-image-wrapper">
+                  <img class="step-image" src="img/step1.png" alt="record-video" />
+                  <div class="step-image-number">
+                    <div class="theme-svg" data-svg-src="img/icons/step-count-1.svg"></div>
+                  </div>
+                </div>
+                <p>Walk around your home recording a video of all your belongings.</p>
+              </div>
+              <div class="step">
+                <div class="step-image-wrapper">
+                  <img class="step-image" src="img/step2.png" alt="itemized-inventory" />
+                  <div class="step-image-number">
+                    <div class="theme-svg" data-svg-src="img/icons/step-count-2.svg"></div>
+                  </div>
+                </div>
+                <p>Our software scans the video and creates an itemized inventory.</p>
+              </div>
+              <div class="step">
+                <div class="step-image-wrapper">
+                  <img class="step-image" src="img/step3.png" alt="quote" />
+                  <div class="step-image-number">
+                    <div class="theme-svg" data-svg-src="img/icons/step-count-3.svg"></div>
+                  </div>
+                </div>
+                <p>Get your quote!</p>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="our-process">
+              <div class="our-process-image" style="background-image: url('img/our-process.jpg')">
+                <img src="img/our-process.jpg" alt="couple-moving" />
+              </div>
+              <div class="our-process-text">
+                <h2>Our Super Fast Process</h2>
+                <ul>
+                  <li class="list-item">
+                    <img src="img/instantaneous.png" alt="quick" />
+
+                    <div class="list-item-text">Immediate and on your own time. Instantaneous!</div>
+                  </li>
+                  <li class="list-item">
+                    <img src="img/accurate.png" alt="accurate" />
+                    <div class="list-item-text">Takes only minutes for the most accurate quote.</div>
+                  </li>
+                  <li class="list-item">
+                    <img src="img/video.png" alt="video" />
+
+                    <div class="list-item-text">Our software uses your video to create a very accurate quote.</div>
+                  </li>
+                </ul>
+                <div class="experience">
+                  <span>Your Experience
+                    <img src="img/happy.png" alt="happy-face" />
+                    <img src="img/happy.png" class="optional-icon" alt="happy-face" />
+                    <img src="img/happy.png" class="optional-icon" alt="happy-face" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="highlights">
+            <div class="indiv-highlight">
+              <div class="highlights-svg theme-svg" data-svg-src="img/faster.svg"></div>
+
+              <h3>Faster</h3>
+              <p>
+                There’s no need to take a day off work or sit through an hour-long video call. Just record a quick
+                video of your home. We do the rest.
+              </p>
+            </div>
+            <div class="indiv-highlight">
+              <div class="highlights-svg theme-svg" data-svg-src="img/easier.svg"></div>
+
+              <h3>Easier</h3>
+              <p>Instead of a blanket price, you get an itemized quote based on your exact inventory.</p>
+            </div>
+            <div class="indiv-highlight">
+              <div class="highlights-svg theme-svg" data-svg-src="img/cheaper.svg">
+              </div>
+              <h3>Save Money</h3>
+              <p>Is the quote too high? Just remove a few items to bring the quote down.</p>
+            </div>
+          </div>
+          <div class="summary-table">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 40%"></th>
+                  <th style="width: 30%" class="old-way">Old-Fashioned Moving Quote</th>
+                  <th style="width: 30%" class="our-way">Our New Moving Quote</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="summary-name">Fast Quotes</td>
+                  <td>
+                    <img class="table-icon" src="img/none.png" alt="none" />
+                  </td>
+                  <td>
+                    <div class="table-icon">
+                      <div class="table-icon theme-svg" data-svg-src="img/icons/tick.svg"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="summary-name">Done on a smartphone</td>
+                  <td>
+                    <img class="table-icon" src="img/none.png" alt="none" />
+                  </td>
+                  <td>
+                    <div class="table-icon">
+                      <div class="table-icon theme-svg" data-svg-src="img/icons/tick.svg"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="summary-name">Painless process</td>
+                  <td>
+                    <img class="table-icon" src="img/none.png" alt="none" />
+                  </td>
+                  <td>
+                    <div class="table-icon">
+                      <div class="table-icon theme-svg" data-svg-src="img/icons/tick.svg"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="summary-name">Most affordable option</td>
+                  <td>
+                    <img class="table-icon" src="img/none.png" alt="none" />
+                  </td>
+                  <td>
+                    <div class="table-icon">
+                      <div class="table-icon theme-svg" data-svg-src="img/icons/tick.svg"></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-image" style="background-image: url('img/testimonial.jpg')">
+              <img src="img/testimonial.jpg" alt="couple-packing" />
+            </div>
+            <div class="testimonial-content">
+              <div class="quote-section">
+                <img src="img/quote.png" alt="quote" />
+                <p>This moving company is amazing! They were quick, efficient, and took all the stress out of my move.
+                  Thanks guys!</p>
+                <p>- Jane S.</p>
+              </div>
+              <div class="review-wrapper">
+                <div class="stars">
+                  <span>
+                    <img src="img/full-star.png" alt="star" />
+                  </span>
+                  <span>
+                    <img src="img/full-star.png" alt="star" />
+                  </span>
+                  <span>
+                    <img src="img/full-star.png" alt="star" />
+                  </span>
+                  <span>
+                    <img src="img/full-star.png" alt="star" />
+                  </span>
+                  <span>
+                    <img src="img/full-star.png" alt="star" />
+                  </span>
+                </div>
+                <div class="reviews extra-padding">
+                  <p class="reviews-subtext">(100 reviews)</p>
+                  <p>Our customers love us with 5 out of 5 stars!</p>
+                  <a class="reviews-subtext"
+                    href="https://YOUR_REVIEW_PAGE_HERE" target="_blank"
+                    rel="noopener noreferrer">Read more reviews</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="not-sticky">
+          <section class="cta">
+            <h1>Get your no obligation quote now! It's fast and easy!</h1>
+            <div class="cta-quote">
+              <button id="show-quote-modal-footer" class="show-quote-button">
+                &nbsp; &nbsp;
+                <i class="fa fa-solid fa-caret-right"></i>
+              </button>
+            </div>
+            <div class="call-text">
+              <a href="tel:YOUR_PHONE_HERE">
+                <div class="alt-cta-text">I'd rather talk about it over the phone:</div>
+                <div class="alt-cta-phone">YOUR_PHONE_HERE</div>
+              </a>
+            </div>
+          </section>
+          <div class="footer-wrap">
+            <div class="footer">
+              <img src="img/company-logo.png" class="footer-logo" alt="company-logo" />
+              <h3>The most relaxing moving experience.</h3>
+              <div class="fine-print">
+                <p>
+                  The Terms of Use and our Privacy Policy constitute the sole and entire agreement between you and
+                  YOUR_COMPANY_HERE regarding the Website and supersede all prior and contemporaneous understandings,
+                  agreements, representations, and warranties, both written and oral, regarding the Website.
+                </p>
+                <div class="certifications">
+                  <div class="cert-text">
+                    <p></p>
+                  </div>
+                </div>
+                <p>© 2022 YOUR_COMPANY_HERE</p>
+                <a target="_blank" rel="noopener noreferrer"
+                  href="https://yembo.com/legal/consumer/privacy-policy">Privacy Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.3/build/css/intlTelInput.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+    integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.3/build/js/intlTelInput.js"></script>
+  <script defer="defer" src="js/index.js"></script>
+</body>
+
+</html>

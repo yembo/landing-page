@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 260 260" class="step-svg">
+                      <title>Lander-step-count-1</title>
+                      <path class="cls-white"
+                        d="M11.5,259.71a10,10,0,0,1-10-10v-7.09a10,10,0,0,1,7.78-9.75l10.79-2.44c.05-4.28.08-8.44.08-12.43V178.84l-3.92.35c-.3,0-.61,0-.91,0a10,10,0,0,1-10-10V160.4a10,10,0,0,1,7.83-9.76l37.91-8.4a9.86,9.86,0,0,1,2.16-.24,10,10,0,0,1,5.81,1.86l2.13,1.52a10,10,0,0,1,4.18,8.42l-.6,21.54V218c0,4,0,8.16.07,12.46l10.1,2.45a10,10,0,0,1,7.63,9.71v7.09a10,10,0,0,1-10,10Z"
+                        transform="translate(0)"></path>
+                      <path class="col-fill-company"
+                        d="M72.57,242.63v7.09H11.5v-7.09L31,238.2H54.32ZM53.24,152l2.13,1.53-.61,21.68V218c0,10.33.16,21.15.46,31.71H29.69c.31-10.56.46-21.38.46-31.71V167.9l-14.82,1.34V160.4Z"
+                        transform="translate(0)"></path>
+                      <rect class="cls-none" width="260" height="260"></rect>
+                      <rect class="cls-white" x="5" y="170" width="16" height="64"></rect>
+                    </svg>
