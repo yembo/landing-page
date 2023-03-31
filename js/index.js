@@ -28,7 +28,12 @@ var lander = {
   modal6SetRemainderButton: null,
   modal6GoBackButton: null,
   error: null,
-  payload: {},
+  payload: {
+    consumer:{},
+    move:{},
+    origin:{},
+    destination:{},
+  },
   postUrl: null,
 
   // Svgs
@@ -60,7 +65,9 @@ var lander = {
     lander.themeSvgs = document.querySelectorAll(".theme-svg");
 
     // Make value change based on environment
-    lander.postUrl = "https://api-us.mariner.yembo.ai";
+    //lander.postUrl = "https://api-us.mariner.yembo.ai/initial-params/";
+    //lander.postUrl = "https://api.mariner.dev.yembo.ai/initial-params/";
+    lander.postUrl = "http://localhost:10965/initial-params/";
 
     // jQuery form objects where jQuery.validate() is needed
     lander.$form1 = jQuery("#form1");
@@ -99,9 +106,10 @@ var lander = {
       errorClass: "form-error-message",
       submitHandler: function (form) {
         // Store form values to payload
-        lander.payload.originZip = document.querySelector("#originZip").value;
-        lander.payload.destinationZip = document.querySelector("#destinationZip").value;
-        lander.payload.moveDate = document.querySelector("#moveDate").value;
+        lander.payload.origin.zip = document.querySelector("#originZip").value;
+        lander.payload.destination.zip = document.querySelector("#destinationZip").value;
+        lander.payload.move.date = document.querySelector("#moveDate").value;
+        lander.payload.move.dateKnown = true;
         // Show next modal
         lander.modal1.style.display = "none";
         lander.modal2.style.display = "flex";
@@ -121,7 +129,7 @@ var lander = {
         });
         e.target.classList.add("active");
         // Save value to payload
-        lander.payload.beds = clickedElement.innerHTML;
+        lander.payload.origin.beds = clickedElement.innerHTML;
         // Remove error messages if shown
         errorMsg.classList.remove("show-true");
         errorMsg.classList.add("show-false");
@@ -132,7 +140,7 @@ var lander = {
     // Validate & Submit form2 
     lander.modal2SubmitBtn.onclick = function () {
       // Validate if beds are selected
-      if (lander.payload.beds !== undefined) {
+      if (lander.payload.origin.beds !== undefined) {
         lander.modal2.style.display = "none";
         lander.modal3.style.display = "flex";
       } else {
@@ -156,10 +164,10 @@ var lander = {
       submitHandler: function (form) {
         var welcomeName = document.querySelector("#replace-with-name");
         // Store form values to payload
-        lander.payload.givenName = document.querySelector("#givenName").value;
-        lander.payload.familyName = document.querySelector("#familyName").value;
-        lander.payload.phone = lander.phoneInputPluginInstance.getNumber(); // Returns number with country code
-        lander.payload.email = document.querySelector("#email").value;
+        lander.payload.consumer.givenName = document.querySelector("#givenName").value;
+        lander.payload.consumer.familyName = document.querySelector("#familyName").value;
+        lander.payload.consumer.phone = lander.phoneInputPluginInstance.getNumber(); // Returns number with country code
+        lander.payload.consumer.email = document.querySelector("#email").value;
         // Set the welcome name for the next form
         welcomeName.innerHTML = lander.payload.givenName;
         // Show next modal
@@ -210,8 +218,9 @@ var lander = {
       submitHandler: function (form) {
         var showRemindDateSpan = document.querySelector("#showRemindDate");
         var remindDate = document.querySelector("#remindDate");
+        var remindDateTime = new Date(remindDate.value);
         // Store form values to payload
-        lander.payload.remindDate = remindDate.value;
+        lander.payload.move.expectedSurveyDate = remindDateTime.toISOString();
         // Show reminder date to show back to the user in the next modal
         showRemindDateSpan.innerHTML = new Date(lander.remindDate.value).toLocaleString("default",
           { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric" });
@@ -311,8 +320,18 @@ var lander = {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success:', data);
-        handleSuccess();
+        if (data && data.status && data.status.length > 0 && data.status[0].type) {
+          if(data.status[0].type === 'ok'){
+            console.log('Success:', data);
+            handleSuccess();
+          }else{
+            console.error('Error:', data);
+            handleFailure();
+          }
+        }else{
+          console.error('Error:', error);
+          handleFailure();
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
