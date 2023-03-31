@@ -65,9 +65,7 @@ var lander = {
     lander.themeSvgs = document.querySelectorAll(".theme-svg");
 
     // Make value change based on environment
-    //lander.postUrl = "https://api-us.mariner.yembo.ai/initial-params/";
-    //lander.postUrl = "https://api.mariner.dev.yembo.ai/initial-params/";
-    lander.postUrl = "http://localhost:10965/initial-params/";
+    lander.postUrl = "https://api-us.mariner.yembo.ai/initial-params/";
 
     // jQuery form objects where jQuery.validate() is needed
     lander.$form1 = jQuery("#form1");
