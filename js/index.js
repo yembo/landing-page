@@ -186,6 +186,7 @@ var lander = {
     // Show 'Record now' modal
     lander.modal4RecordingBtn.onclick = function () {
       lander.modal4RecordingBtn.setAttribute("disabled", "disabled");
+      lander.payload.move.expectedSurveyDate = new Date(Date.now() + 6 * 60 * 1000).toISOString(); //6 minutes in the future to ensure the invite sends
       lander.sendPayload(function () {
         // on Success
         lander.modal4.style.display = "none";
@@ -217,10 +218,12 @@ var lander = {
         var showRemindDateSpan = document.querySelector("#showRemindDate");
         var remindDate = document.querySelector("#remindDate");
         var remindDateTime = new Date(remindDate.value);
+        var inSixMinutes = new Date(Date.now() + 6 * 60 * 1000);
+        remindDateTime = inSixMinutes > remindDateTime ? inSixMinutes : remindDateTime; //make sure the expected survey date is at least 6 minutes in the future
         // Store form values to payload
         lander.payload.move.expectedSurveyDate = remindDateTime.toISOString();
         // Show reminder date to show back to the user in the next modal
-        showRemindDateSpan.innerHTML = new Date(lander.remindDate.value).toLocaleString("default",
+        showRemindDateSpan.innerHTML = remindDateTime.toLocaleString("default",
           { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric" });
         lander.modal6SetRemainderButton.setAttribute("disabled", "disabled");
         lander.sendPayload(function () {
