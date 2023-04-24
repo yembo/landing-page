@@ -11,10 +11,13 @@ In order to use this lander (or one derived from it), your company in Yembo need
 ## Customizations 
 The following customizations are recommended: 
 
-### In `index.js`
+### In `index.js`, set `lander.apiUrl` (line 77)
 1. If you log into Yembo's North American environment (https://app.yembo.ai), you do not need to make any changes.
 2. If you log into Yembo's European environment (https://app.yembo.eu), replace `https://api-us.mariner.yembo.ai` with `https://api-eu.mariner.yembo.ai`
 3. If you log into Yembo's Asia-Pacific environment (https://app.yembo.com.sg), replace `https://api-us.mariner.yembo.ai` with `https://api-sg.mariner.yembo.ai`
+
+### In `index.js`, set `lander.invitePayload.link` (line 78)
+1. You will need to replace `https://prod.yembo.ai` with your company's Yembo lander URL. Our [customer success team](mailto:customersuccess@yembo.ai) can provide you with this value.
 
 ### In `styles.css`
 1. Replace `--company-color` with the hex code of your company's color
