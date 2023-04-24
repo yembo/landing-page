@@ -35,6 +35,15 @@ var lander = {
     destination:{},
   },
   postUrl: null,
+  apiUrl: null,
+  inviteUrl: null,
+  linkUrl: null,
+  invitePayload: {
+    identifier: null,
+    link: null,
+    shouldSendSms: true,
+    shouldSendEmail: true,
+  },
 
   // Svgs
   themeSvgs: [],
@@ -65,7 +74,11 @@ var lander = {
     lander.themeSvgs = document.querySelectorAll(".theme-svg");
 
     // Make value change based on environment
-    lander.postUrl = "https://api-us.mariner.yembo.ai/initial-params/";
+    lander.apiUrl = "https://api-us.mariner.yembo.ai";
+    lander.invitePayload.link = "https://prod.yembo.ai"; 
+
+    lander.postUrl = `${lander.apiUrl}/initial-params/`;
+    lander.inviteUrl = `${lander.apiUrl}/invite/`;
 
     // jQuery form objects where jQuery.validate() is needed
     lander.$form1 = jQuery("#form1");
@@ -186,13 +199,22 @@ var lander = {
     // Show 'Record now' modal
     lander.modal4RecordingBtn.onclick = function () {
       lander.modal4RecordingBtn.setAttribute("disabled", "disabled");
-      lander.payload.move.expectedSurveyDate = new Date(Date.now() + 6 * 60 * 1000).toISOString(); //6 minutes in the future to ensure the invite sends
-      lander.sendPayload(function () {
-        // on Success
-        lander.modal4.style.display = "none";
-        lander.modal5.style.display = "flex";
-        lander.modal4RecordingBtn.removeAttribute("disabled");
-        lander.resetFormInputs();
+      lander.payload.move.expectedSurveyDate = new Date().toISOString();
+      lander.sendPayload(lander.postUrl, lander.payload, function (data) {
+        lander.invitePayload.identifier = data.identifier,
+        lander.sendPayload(lander.inviteUrl, lander.invitePayload, function(data){ //make the API call to send the invite SMS/email
+          // on Success
+          lander.modal4.style.display = "none";
+          lander.modal5.style.display = "flex";
+          lander.modal4RecordingBtn.removeAttribute("disabled");
+          lander.resetFormInputs();
+        },function(){
+          // on Error
+          lander.modal4.style.display = "none"
+          lander.modal5.style.display = "none"
+          lander.modal8.style.display = "flex"
+          lander.modal4RecordingBtn.removeAttribute("disabled");
+        });
       },
         function () {
           // on Error
@@ -226,7 +248,7 @@ var lander = {
         showRemindDateSpan.innerHTML = remindDateTime.toLocaleString("default",
           { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric" });
         lander.modal6SetRemainderButton.setAttribute("disabled", "disabled");
-        lander.sendPayload(function () {
+        lander.sendPayload(lander.postUrl, lander.payload, function () {
           // on success
           lander.modal6.style.display = "none";
           lander.modal7.style.display = "flex";
@@ -310,21 +332,21 @@ var lander = {
   },
 
   // Method to Send the payload
-  sendPayload: function (handleSuccess, handleFailure) {
+  sendPayload: function (url, payload, handleSuccess, handleFailure) {
     // using fetch
-    fetch(lander.postUrl, {
+    fetch(url, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(lander.payload),
+      body: JSON.stringify(payload),
     })
       .then(response => response.json())
       .then(data => {
         if (data && data.status && data.status.length > 0 && data.status[0].type) {
           if(data.status[0].type === 'ok'){
             console.log('Success:', data);
-            handleSuccess();
+            handleSuccess(data);
           }else{
             console.error('Error:', data);
             handleFailure();
@@ -340,6 +362,7 @@ var lander = {
       });
 
   },
+
   resetFormInputs: function () {
     // reset all form fields to their default state
   }
