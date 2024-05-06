@@ -180,7 +180,7 @@ var lander = {
         lander.payload.consumer.phone = lander.phoneInputPluginInstance.getNumber(); // Returns number with country code
         lander.payload.consumer.email = document.querySelector("#email").value;
         // Set the welcome name for the next form
-        welcomeName.innerHTML = lander.payload.givenName;
+        welcomeName.innerHTML = lander.payload.consumer.givenName;
         // Show next modal
         lander.modal3.style.display = "none";
         lander.modal4.style.display = "flex";
